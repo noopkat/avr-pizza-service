@@ -1,0 +1,28 @@
+{
+  "name": "avr-pizza",
+  "version": "0.0.0",
+  "description": "compile arduino sketches, eat pizza",
+  "main": "avr-pizza.js",
+  "bin": {
+    "avr-pizza": "cli.js"
+  },
+  "dependencies": {
+    "hapi": "^13.2.2",
+    "inert": "^3.2.0",
+    "minimist": "^1.2.0",
+    "mkdirp": "^0.5.1",
+    "node-uuid": "^1.4.7",
+    "request": "^2.72.0",
+    "rimraf": "^2.5.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "avr",
+    "arduino"
+  ],
+  "author": "Suz Hinton",
+  "license": "MIT"
+}
