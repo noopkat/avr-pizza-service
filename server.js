@@ -56,8 +56,8 @@ server.start((err) => {
     throw err;
   }
   console.log('Server running at:', server.info.uri);
-  let dummyfile = path.join(__dirname, 'dummy','sketches','Firmata','examples','StandardFirmata','StandardFirmata.ino');
-  // let dummyfile = path.join(__dirname, 'dummy','sketches','Blink','blink.ino');
+  // let dummyfile = path.join(__dirname, 'dummy','sketches','Firmata','examples','StandardFirmata','StandardFirmata.ino');
+  let dummyfile = path.join(__dirname, 'dummy','sketches','Blink','blink.ino');
 
   fs.readFile(dummyfile, {encoding: 'utf8'}, function(error, file) {
     let data = JSON.stringify({
@@ -69,7 +69,7 @@ server.start((err) => {
       ],
       board: 'uno',
       libraries: {},
-      version: '16800'
+      version: '16900'
     });
 
     let jsonData = querystring.stringify(data);
