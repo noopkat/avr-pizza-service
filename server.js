@@ -61,6 +61,12 @@ server.register(require('inert'), (err) => {
         }
         reply(response);
      });
+    },
+    config: {
+      payload: {
+        output: 'stream',
+        parse: false
+      }
     }
   });
 });
