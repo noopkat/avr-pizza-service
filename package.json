@@ -7,6 +7,7 @@
     "avr-pizza": "cli.js"
   },
   "dependencies": {
+    "gunzip-maybe": "^1.3.1",
     "hapi": "^13.2.2",
     "inert": "^3.2.0",
     "minimist": "^1.2.0",
