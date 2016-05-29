@@ -2,7 +2,7 @@
 
 const Hapi = require('hapi');
 const request = require('request');
-const http = require('http');
+const https = require('https');
 const querystring = require('querystring');
 const path = require('path');
 const fs = require('fs');
@@ -27,6 +27,16 @@ server.register(require('inert'), (err) => {
 
   server.route({
     method: 'GET',
+    path: '/.well-known/{param*}',
+    handler: {
+        directory: {
+            path: '.well-known'
+        }
+    }
+  });
+
+  server.route({
+    method: 'GET',
     path: '/auth/v1',
     handler: function (request, reply) {
       // generate a token
@@ -42,8 +52,15 @@ server.register(require('inert'), (err) => {
     handler: function (request, reply) {
       let builder = new Compiler();
       builder.compile(request, function(error, hex) {
-        reply({hex: hex});
-      });
+        var hexJson = JSON.stringify(hex);
+        var response = {
+          data: {
+            type: 'hex',
+            src: JSON.parse(hexJson).data
+          }
+        }
+        reply(response);
+     });
     }
   });
 });
@@ -76,14 +93,14 @@ server.start((err) => {
     // console.log(jsonData);
 
     var options = {
-      hostname: 'localhost',
+      hostname: 'avr.pizza',
       path: `/compile/v1`,
-      port: 3000,
+      port: 443,
       method : 'POST',
       headers: {'User-Agent': 'avrpizza', 'Accept': 'application/json'}
     };
 
-    var reqGet = http.request(options, function(res) {
+    var reqGet = https.request(options, function(res) {
       var datastring = '';
       res.on('data', function(d) {
           datastring += d;
@@ -92,15 +109,15 @@ server.start((err) => {
       res.on('end', function() {
         // done
         console.log('sent request in full:', datastring);
-      }); 
+      });
     });
 
     reqGet.on('error', function(e) {
-      return reply('everything is sad: '+e);
-    }); 
+      console.log('everything is sad: '+e);
+    });
 
     reqGet.write(data);
     reqGet.end();
-    
+
   });
 });
