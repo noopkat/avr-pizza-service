@@ -1,11 +1,6 @@
 'use strict';
 
 const Hapi = require('hapi');
-const request = require('request');
-const https = require('https');
-const querystring = require('querystring');
-const path = require('path');
-const fs = require('fs');
 const Compiler = require('./lib/compiler');
 
 const server = new Hapi.Server();
@@ -79,51 +74,4 @@ server.start((err) => {
     throw err;
   }
   console.log('Server running at:', server.info.uri);
-  // let dummyfile = path.join(__dirname, 'dummy','sketches','Firmata','examples','StandardFirmata','StandardFirmata.ino');
-  let dummyfile = path.join(__dirname, 'dummy','sketches','Blink','blink.ino');
-
-  fs.readFile(dummyfile, {encoding: 'utf8'}, function(error, file) {
-    let data = JSON.stringify({
-      files: [
-        {
-          filename: 'sketch.ino',
-          content: file
-        }
-      ],
-      board: 'uno',
-      libraries: {},
-      version: '16900'
-    });
-
-    let jsonData = querystring.stringify(data);
-    // console.log(jsonData);
-
-    var options = {
-      hostname: 'avr.pizza',
-      path: `/compile/v1`,
-      port: 443,
-      method : 'POST',
-      headers: {'User-Agent': 'avrpizza', 'Accept': 'application/json'}
-    };
-
-    var reqGet = https.request(options, function(res) {
-      var datastring = '';
-      res.on('data', function(d) {
-          datastring += d;
-      });
-
-      res.on('end', function() {
-        // done
-        console.log('sent request in full:', datastring);
-      });
-    });
-
-    reqGet.on('error', function(e) {
-      console.log('everything is sad: '+e);
-    });
-
-    reqGet.write(data);
-    reqGet.end();
-
-  });
 });
