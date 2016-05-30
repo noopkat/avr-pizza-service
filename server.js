@@ -45,8 +45,8 @@ server.register(require('inert'), (err) => {
     method: 'POST',
     path: '/compile/v1',
     handler: function (request, reply) {
-      let builder = new Compiler();
-      builder.compile(request, function(error, hex) {
+      let builder = new Compiler(request);
+      builder.compile(function(error, hex) {
         var hexJson = JSON.stringify(hex);
         var response = {
           data: {
@@ -66,9 +66,6 @@ server.register(require('inert'), (err) => {
   });
 });
 
-
-
-/* test request */
 server.start((err) => {
   if (err) {
     throw err;
