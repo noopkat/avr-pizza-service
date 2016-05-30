@@ -2,8 +2,8 @@
 
 # avr-pizza-service
 
-supply strings, make pizza
+supply tarball, make pizza
 
-:pizza:
+:pizza: :pizza: :pizza:
 
 (more to come)
