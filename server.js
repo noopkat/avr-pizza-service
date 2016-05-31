@@ -24,9 +24,9 @@ server.register(require('inert'), (err) => {
     method: 'GET',
     path: '/.well-known/{param*}',
     handler: {
-        directory: {
-            path: '.well-known'
-        }
+      directory: {
+        path: '.well-known'
+      }
     }
   });
 
@@ -48,13 +48,24 @@ server.register(require('inert'), (err) => {
       let builder = new Compiler(request);
       builder.compile(function(error, hex) {
         var hexJson = JSON.stringify(hex);
-        var response = {
-          data: {
-            type: 'hex',
-            src: JSON.parse(hexJson).data
+        var response, code;
+        
+        if (error) {
+          code = 400;
+          response = {
+            error: error
+          }
+        } else {
+          code = 200;
+          response = {
+            data: {
+              type: 'hex',
+              src: JSON.parse(hexJson).data
+            }
           }
         }
-        reply(response);
+        // reply with appropriate response and code
+        reply(response).code(code);
      });
     },
     config: {
