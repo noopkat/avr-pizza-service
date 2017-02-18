@@ -6,7 +6,7 @@ const Compiler = require('./lib/compiler');
 const server = new Hapi.Server();
 server.connection({ port: 3000 });
 
-server.register(require('inert'), (err) => {
+server.register(require('inert'), function(err) {
 
   if (err) {
     throw err;
@@ -34,9 +34,6 @@ server.register(require('inert'), (err) => {
     method: 'GET',
     path: '/auth/v1',
     handler: function (request, reply) {
-      // generate a token
-      // save in db
-      // reply with token
       reply.file('./public/index.html');
     }
   });
@@ -47,8 +44,8 @@ server.register(require('inert'), (err) => {
     handler: function (request, reply) {
       let builder = new Compiler(request);
       builder.compile(function(error, hex) {
-        var hexJson = JSON.stringify(hex);
-        var response, code;
+        const hexJson = JSON.stringify(hex);
+        let response, code;
         
         if (error) {
           code = 400;
@@ -77,7 +74,7 @@ server.register(require('inert'), (err) => {
   });
 });
 
-server.start((err) => {
+server.start(function(err) {
   if (err) {
     throw err;
   }
