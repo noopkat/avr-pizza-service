@@ -27,3 +27,6 @@ You can build it your self ([above](#build-docker-image)) and replace your regis
 The output will give you an public ip address you can see your service running at.
 
 note: instructions on how to secure coming soon.
+
+## Run in Kubernetes
+coming soon :-)
