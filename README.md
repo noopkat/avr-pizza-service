@@ -56,6 +56,8 @@ kubectl expose deployments avrpizza-service --port=80 --type=LoadBalancer
 Scale it with `kubectl scale deployment avrpizza-service --replicas 7`
 
 ### Using Helm
-You can also deploy using a [Helm](https://helm.sh/) chart supplied:
+You can also deploy using a [Helm](https://helm.sh/) chart supplied.  [Install Helm and initialize tiller](https://docs.helm.sh/using_helm/#install-helm) then run (you will need to have the chart downloaded locally): 
 
-`coming soon`
+```
+helm install --name pizzamaker ./chart/avrpizza-service/
+```
