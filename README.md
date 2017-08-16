@@ -18,7 +18,9 @@ Build and host your own docker image.  You can host at [Docker Hub](https://hub.
 - `docker push` (may need to login via `docker login`)
 
 ## Run in Azure
-You can build it your self ([above](#build-docker-image)) and replace your registry name with your registry info below.  Or you can skip building your own version and use the image hosted at (coming soon...). 
+You can build it your self ([above](#build-docker-image)) and replace your registry name with your registry info below.  Or you can skip building your own version and use the image hosted at (`jsturtevant/avrpizza`). 
+
+Requires [Azure Cli 2.0](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
 
 - `az login` (follow prompt)
 - `az resource create --name avrpizza-service-rg --location <eastus>`
@@ -29,4 +31,33 @@ The output will give you an public ip address you can see your service running a
 note: instructions on how to secure coming soon.
 
 ## Run in Kubernetes
-coming soon :-)
+
+### Create a cluster
+If you need a cluster you can create one in Azure.
+
+Requires [Azure Cli 2.0](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli)
+
+```bash
+az login #(follow prompt)
+az group create --name kube-demo --location eastus2
+az configure --defaults group=kube-demo location=eastus2
+az acs create --orchestrator-type=kubernetes --name=kube-demo-cluster --dns-prefix=acs-demo-123 --generate-ssh-key
+```
+
+### Deploy manually
+Use your own image or the hosted in the `kubectl run` command below.  You may need to change your deployment type to fit your environment.
+
+```
+kubectl run avrpizza-service --image jsturtevant/avrpizza --replicas 1
+kubectl get deployment avrpizza-service
+kubectl expose deployments avrpizza-service --port=80 --type=LoadBalancer
+```
+
+Scale it with `kubectl scale deployment avrpizza-service --replicas 7`
+
+### Using Helm
+You can also deploy using a [Helm](https://helm.sh/) chart supplied.  [Install Helm and initialize tiller](https://docs.helm.sh/using_helm/#install-helm) then run (you will need to have the chart downloaded locally): 
+
+```
+helm install --name pizzamaker ./chart/avrpizza-service/
+```
