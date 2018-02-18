@@ -2,9 +2,9 @@
 
 const Hapi = require('hapi');
 const Compiler = require('./lib/compiler');
-
+const port = process.env.PORT || 3000;
 const server = new Hapi.Server();
-server.connection({ port: 3000 });
+server.connection({ port: port });
 
 server.register(require('inert'), function(err) {
 
