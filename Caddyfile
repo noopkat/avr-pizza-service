@@ -1,0 +1,6 @@
+staging.avr.pizza
+proxy / avr-pizza:3000
+
+gzip
+tls noopkat@gmail.com
+

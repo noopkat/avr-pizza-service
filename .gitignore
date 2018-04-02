@@ -5,3 +5,5 @@ bin/builder
 dummy
 build.options.json
 volumes/proxy/certs
+.caddy
+*.swp
